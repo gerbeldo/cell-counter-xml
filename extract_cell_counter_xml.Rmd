@@ -1,0 +1,47 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(xml2)
+library(tidyverse)
+```
+
+```{r}
+a <- read_xml("CellCounter_Stack_BFPositionsn013-n013.xml")
+b <- read_xml("CellCounter_Stack_BFPositionsn026-n026.xml")
+
+aa <- as_list(a)
+bb <- as_list(b)
+
+xml2::xml_contents(a)
+
+```
+
+```{r}
+
+n_markers <- length(xml_length(xml_find_all(a, "//Marker_Type/Name")))
+
+# genero xpath para marker n
+marker_xpath <- function(n){
+  base <- "//Marker_Type[x]"
+  str_replace(base, "x", as.character(n))
+}
+
+# obtengo los markers
+get_markers <- function(xpath, obj) {
+  as_list(xml_contents(xml_find_first(obj, xpath)))[-c(1,2)]
+}
+
+# genero tibble con una fila por celula.
+tibble(marker = map_chr(1:8, .f = gen_marker), n = 1:8) %>%
+  mutate(x = map(marker, temp_f, b)) %>% 
+  unnest(x) %>% 
+  mutate(xx = map(x, unlist))
+
+
+```
+
