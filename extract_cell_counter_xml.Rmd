@@ -11,20 +11,20 @@ library(tidyverse)
 ```
 
 ```{r}
-a <- read_xml("CellCounter_Stack_BFPositionsn013-n013.xml")
-b <- read_xml("CellCounter_Stack_BFPositionsn026-n026.xml")
-b <- read_xml("CellCounter_Stack_BFPositionsn111-n111.xml")
-
-aa <- as_list(a)
-bb <- as_list(b)
-
-xml2::xml_contents(a)
+# a <- read_xml("CellCounter_Stack_BFPositionsn013-n013.xml")
+# b <- read_xml("CellCounter_Stack_BFPositionsn026-n026.xml")
+# b <- read_xml("CellCounter_Stack_BFPositionsn111-n111.xml")
+# 
+# aa <- as_list(a)
+# bb <- as_list(b)
+# 
+# xml2::xml_contents(a)
 
 ```
 
 ```{r}
 
-n_markers <- length(xml_length(xml_find_all(a, "//Marker_Type/Name")))
+#n_markers <- length(xml_length(xml_find_all(a, "//Marker_Type/Name")))
 
 # genero xpath para marker n
 marker_xpath <- function(n){
