@@ -1,0 +1,18 @@
+Package: parseCellCounter
+Title: Parse Cell Counter XML
+Version: 0.0.0.9000
+Authors@R: 
+    person("German", "Beldorati Stark", , "gerbeldo@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0007-3290-4943"))
+Description: Parse XML output from fiji/ImageJ Cell Counter plugin.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    dplyr,
+    purrr,
+    stringr,
+    tibble,
+    tidyr,
+    xml2
