@@ -31,7 +31,7 @@ extract_xml <- function(xml_base_list) {
     tidyr::unnest(raw_xml_extract) |>
     dplyr::mutate(
       id = dplyr::row_number(),
-      parsed_xml_object = purrr::map(raw_xml_extract, enframe)
+      parsed_xml_object = purrr::map(raw_xml_extract, tibble::enframe)
     )
 
   out
@@ -40,13 +40,13 @@ extract_xml <- function(xml_base_list) {
 
 clean_xml_tibble <- function(xml_tibble) {
   if (nrow(xml_tibble) != 0) {
-    xml_tibble %>%
+    xml_tibble |>
       tidyr::unnest(parsed_xml_object) |>
       dplyr::mutate(
         value = as.numeric(unlist(value)),
         raw_xml_extract = NULL
       ) |>
-      dplyr::pivot_wider(
+      tidyr::pivot_wider(
         id_cols = c(marker_type, marker_type_int, id),
         names_from = "name",
         values_from = "value"
@@ -82,6 +82,15 @@ parse_cell_counter_xml <- function(xml_fpath) {
     )
 }
 
+#' Parse cell counter XML output
+#'
+#' Loads all XML files in directory `dir_path` and parses them
+#'
+#' @param dir_path character - path to directory containing Cell Counter XML files
+#'
+#' @return tibble
+#' @export
+#'
 parse_cell_counter_results <- function(dir_path) {
   l <- file.path(
     dir_path,
